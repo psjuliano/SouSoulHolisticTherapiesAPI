@@ -83,6 +83,46 @@ app.post('/api/v1/services', async(req, res) => {
 
 
 
+app.delete('/api/v1/services/:service_id', async (req, res) => {
+
+    //Verify if service_id exists
+    verify = await model.Services.findOne({ service_id: req.params.service_id }, 'service_id').exec();
+    if (verify !== null){
+        if (verify.service_id == req.params.service_id) {
+
+            await model.Services.deleteOne({ service_id: req.params.service_id }).exec();
+            return res.status(200).send(
+                {
+                    service_id: req.params.service_id,
+                    message: 'Service with id '+ req.params.service_id + ' was deleted'
+                }
+            )
+
+        }
+        else{
+            return res.status(202).send(
+                {
+                    message: 'Service with id '+ req.params.service_id + ' not exist'
+                }
+            )
+        }
+    }
+
+    else{
+        return res.status(202).send(
+            {
+                message: 'Service with id '+ req.params.service_id + ' not exist'
+            }
+        )
+    }
+
+
+})
+
+
+
+
+
 
 
 
