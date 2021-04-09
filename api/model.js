@@ -1,4 +1,4 @@
-const functions = require('./util-functions'); //require Util functions
+const functions = require('./util-functions'); //require util functions
 const mongoose = require('mongoose'); //ORM to manipulate MongoDB
 require('dotenv').config();
 
@@ -38,3 +38,24 @@ const serviceSchema = mongoose.Schema({
 
 //Generate Collection item
 const Services = mongoose.model('services', serviceSchema);
+
+
+//Function to format data into json
+const transformer = services => ({
+    type: 'services',
+    attributes: {
+        service_id: services.service_id,
+        title: services.title,
+        price: services.price,
+        image: `/images/${services.service_id}.jpg`,
+        created: services.created,
+        updated: services.updated
+    },
+    links: {
+        self: `/api/v1/services/${services.service_id}`
+    }
+}); 
+
+
+module.exports.Services = Services;
+module.exports.transformer = transformer;

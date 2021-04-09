@@ -17,7 +17,11 @@ app.use(
 
 // GET request
 app.get('/api/v1/services', async(req, res) => {
-  res.send('hello world')
+
+  services = await model.Services.find().sort({serial: -1})
+  const data = {data: services.map(model.transformer)};
+  res.status(200).send(data)
+
 })
 
 
