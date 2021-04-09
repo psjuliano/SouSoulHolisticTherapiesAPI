@@ -28,7 +28,7 @@ app.get('/api/v1/services', async(req, res) => {
 app.post('/api/v1/services', async(req, res) => {
 
 
-    //check if the inputData fields are missing or empty
+    //check if the input fields are missing or empty
     if (functions.empty(req.body.title) || functions.empty(req.body.price)) {
         return res.status(202).send(
             {
@@ -82,6 +82,16 @@ app.post('/api/v1/services', async(req, res) => {
 
 app.get('/api/v1/services/:service_id', async (req, res) => {
 
+
+    //check if the param service_id are missing or empty
+    if (functions.empty(req.params.service_id)) {
+        return res.status(202).send(
+            {
+                message: 'Empty service_id'
+            }
+        )
+    }
+
     service = await model.Services.findOne({ service_id: req.params.service_id }).exec();
 
     if (service !== null) {
@@ -91,7 +101,7 @@ app.get('/api/v1/services/:service_id', async (req, res) => {
     else{
         return res.status(404).send(
             {
-                message: 'The item with id '+req.params.service_id+' not exist'
+                message: 'The service with id '+req.params.service_id+' not exist'
             }
         )
     }
@@ -103,7 +113,81 @@ app.get('/api/v1/services/:service_id', async (req, res) => {
 
 
 
+
+app.put('/api/v1/services/:service_id', async (req, res) => {
+
+
+    //check if the param service_id are missing or empty
+    if (functions.empty(req.params.service_id)) {
+        return res.status(202).send(
+            {
+                message: 'Empty service_id'
+            }
+        )
+    }
+
+    service = await model.Services.findOne({ service_id: req.params.service_id }).exec();
+
+    if (service !== null) {
+        
+        //check if the input fields are missing or empty
+        if (functions.empty(req.body.title) || functions.empty(req.body.price)) {
+            return res.status(202).send(
+                {
+                    message: 'Empty fields'
+                }
+            )
+        }
+
+        const filter = { service_id: req.params.service_id };
+        const update = { 
+            title:  req.body.title,
+            price: parseFloat(req.body.price),
+            image:  req.body.image,
+            updated: functions.getDateTime(),
+        };
+
+
+        await model.Services.findOneAndUpdate(filter, update);
+
+        //Formated response 
+        res.status(200).send(
+            {
+                service_id: req.params.service_id,
+                message: ''+req.body.title+' service successfully updated'
+            }
+        )
+
+
+    }
+    else{
+        return res.status(404).send(
+            {
+                message: 'The service with id '+req.params.service_id+' not exist'
+            }
+        )
+    }
+
+
+})
+
+
+
+
+
+
+
 app.delete('/api/v1/services/:service_id', async (req, res) => {
+
+
+    //check if the param service_id are missing or empty
+    if (functions.empty(req.params.service_id)) {
+        return res.status(202).send(
+            {
+                message: 'Empty service_id'
+            }
+        )
+    }
 
     //Verify if service_id exists
     verify = await model.Services.findOne({ service_id: req.params.service_id }, 'service_id').exec();
