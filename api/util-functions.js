@@ -16,5 +16,22 @@ const getDateTime = function() {
 
 
 
+//verify if value (string) is empty
+const empty = function(string) {
+    //Force convert to string
+    string = String(string);
+    //Remove extra white spaces
+    string = string.replace(/\s{2,}/g, '');
 
+    if(string == null || string == ''){
+        return true
+    }
+    else{
+        return false
+    }
+}
+
+
+
+module.exports.empty = empty;
 module.exports.getDateTime = getDateTime;

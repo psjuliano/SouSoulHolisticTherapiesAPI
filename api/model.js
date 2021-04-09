@@ -32,6 +32,7 @@ const serviceSchema = mongoose.Schema({
     service_id: { type: String,  unique: true, required: true, trim: true },
     title: { type: String, unique: true, required: true, trim: true },
     price:{ type: String , required: true, trim: true },
+    image:{ type: String , trim: true },
     created: { type: String, default: functions.getDateTime() },
     updated: { type: String, default: functions.getDateTime() }
 });
@@ -47,7 +48,7 @@ const transformer = services => ({
         service_id: services.service_id,
         title: services.title,
         price: services.price,
-        image: `/images/${services.service_id}.jpg`,
+        image: services.image,
         created: services.created,
         updated: services.updated
     },
