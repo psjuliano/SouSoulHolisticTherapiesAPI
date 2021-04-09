@@ -60,7 +60,7 @@ app.post('/api/v1/services', async(req, res) => {
         price: parseFloat(req.body.price),
         image:  req.body.image
     }).save().then(() => {
-        //console.log('registered succesfull')
+        console.log('registered succesfull')
     }).catch((error) =>{
         console.log('Error to register '.error)
     })
@@ -71,7 +71,7 @@ app.post('/api/v1/services', async(req, res) => {
     res.status(201).send(
         {
             service_id: service_id,
-            message: ''+input.title+' service successfully created'
+            message: ''+req.body.title+' service successfully created'
         }
     )
 

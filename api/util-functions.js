@@ -16,6 +16,14 @@ const getDateTime = function() {
 
 
 
+const getTimestamp = () => {
+    let dt = new Date();
+    return dt.getTime();
+}
+
+
+
+
 //verify if value (string) is empty
 const empty = function(string) {
     //Force convert to string
@@ -34,4 +42,5 @@ const empty = function(string) {
 
 
 module.exports.empty = empty;
+module.exports.getTimestamp = getTimestamp;
 module.exports.getDateTime = getDateTime;
