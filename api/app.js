@@ -75,6 +75,26 @@ app.post('/api/v1/services', async(req, res) => {
         }
     )
 
+})
+
+
+
+
+app.get('/api/v1/services/:service_id', async (req, res) => {
+
+    service = await model.Services.findOne({ service_id: req.params.service_id }).exec();
+
+    if (service !== null) {
+        const data = {data: [model.transformer(service)]};
+        res.status(200).send(data)
+    }
+    else{
+        return res.status(404).send(
+            {
+                message: 'The item with id '+req.params.service_id+' not exist'
+            }
+        )
+    }
 
 
 })
