@@ -1,8 +1,10 @@
 const functions = require('./util-functions'); //require Util functions
 const express = require('express'); //generate and manipulate routes
 const model = require('./model'); //require Database model and access
+const modelImages = require('./modelImages'); //require Database model and access
 const fileUpload = require('express-fileupload'); //Allow file uploads and form data
-const cors = require('cors'); //Allow or bloc access for diferent origins
+const cors = require('cors'); //Allow or block access for diferent origins
+const fs = require('fs');
 require('dotenv').config();
 
 const app = express();
@@ -10,8 +12,17 @@ const app = express();
 app.use(
     express.json(), //Json data
     fileUpload(), //File upload
-    cors() //Requests for all origins
+    cors(), //Requests for all origins
+    express.static("view") //Allow static file path - view
 )
+
+/* VIEW route - GET method */
+app.get('/', (req, res) => {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.sendFile('view/');
+})
+
+
 
 
 // GET request
@@ -228,6 +239,68 @@ app.delete('/api/v1/services/:service_id', async (req, res) => {
 
 
 
+// GET request for images
+app.get('/api/v1/images', async(req, res) => {
+
+    let images = await modelImages.listImages();
+    let data = images
+
+    res.status(200).send(data)
+
+})
+
+
+// POST request for images
+app.post('/api/v1/images', async(req, res) => {
+
+    if(req.files == null){
+        return res.status(202).send(
+            {
+                message: 'Empty image file'
+            }
+        )    
+    }
+
+    else{
+
+        imageFile = req.files.image
+        imageName = req.files.image.name;
+        
+        imageFile.mv('./'+imageName);
+
+        uploaded = await modelImages.uploadImage(imageName);
+
+        if(uploaded){
+            fs.unlinkSync('./'+imageName);
+            res.status(200).send()
+        }
+        else{
+            res.status(202).send()
+        }
+    }
+
+})
+
+
+
+// DELETE request for images
+app.delete('/api/v1/images/:file_name', async(req, res) => {
+
+    //check if the param service_id are missing or empty
+    if (functions.empty(req.params.file_name)) {
+        return res.status(202).send(
+            {
+                message: 'Empty File Name'
+            }
+        )
+    }
+
+    let images = await modelImages.deleteImage(req.params.file_name);
+    let data = images
+
+    res.status(200).send(data)
+
+})
 
 
 
