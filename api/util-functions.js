@@ -40,7 +40,6 @@ const empty = function(string) {
 }
 
 
-
 module.exports.empty = empty;
 module.exports.getTimestamp = getTimestamp;
 module.exports.getDateTime = getDateTime;
