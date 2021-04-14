@@ -7,3 +7,4 @@ yarn-error.log*
 lerna-debug.log*
 
 .env
+firebase-key.json

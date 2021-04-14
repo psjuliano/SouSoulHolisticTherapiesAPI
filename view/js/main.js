@@ -33,7 +33,7 @@ async function retrieve(){
 
 
             if(image == ''){
-                image = 'http://www.sinpospetroce.org.br/wp-content/themes/fearless/images/missing-image-640x360.png';
+                image = 'https://sindilojas-sp.org.br/wp-content/themes/sindilojas/assets/images/default.jpg';
             }
 
             dataTable += `
