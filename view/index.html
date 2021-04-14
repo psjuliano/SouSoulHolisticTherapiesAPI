@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <title>Holistic Therapy</title>
+
+
+    <!-- Bootstrap core CSS -->
+    <link href="./css/bootstrap.min.css" rel="stylesheet">
+
+
+    <!-- Custom styles for this template -->
+    <link href="css/style.css" rel="stylesheet">
+  </head>
+
+  <body>
+    <header>
+  <div class="collapse bg-dark" id="navbarHeader">
+    <div class="container">
+      <div class="row">
+		  
+        <div class="col-sm-8 col-md-7 py-4">
+          <h4 class="text-white">About</h4>
+          <p class="text-muted">Add some information about the album below, the author, or any other background context. Make it a few sentences long so folks can pick up some informative tidbits. Then, link them off to some social networking sites or contact information.</p>
+        </div>
+        
+		  
+      </div>
+    </div>
+  </div>
+  <div class="navbar navbar-dark bg-dark shadow-sm">
+    <div class="container d-flex justify-content-between">
+      <a href="#" class="navbar-brand d-flex align-items-center">
+       
+		  
+        <strong>Holistic Therapy</strong>
+      </a>
+		
+	  <!--
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarHeader" aria-controls="navbarHeader" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+		-->
+		
+    </div>
+  </div>
+</header>
+
+<main role="main">
+
+
+
+  <form class="form-signin" id="mainForm">
+    <div class="text-center mb-4 mt-4">
+      <h1 class="h3 mb-3 font-weight-normal">Insert or update Service</h1>
+    </div>
+
+
+    <div class="form-label-group">
+      <button class="btn btn-lg btn-primary btn-block" type="button" onclick="clearAll();">Insert new service</button>
+    </div>
+
+
+    <div class="form-label-group">
+      <h4 id="service_id"></h4>
+    </div>
+
+  
+    <div class="form-label-group">
+      <input type="text" id="title" class="form-control" placeholder="*Title" autofocus>
+      <label for="title">*Title</label>
+    </div>
+  
+    <div class="form-label-group">
+      <input type="text" id="price" class="form-control" placeholder="*Price" data-type="currency">
+      <label for="price">*Price</label>
+    </div>
+
+
+
+
+    <div class="form-label-group">
+
+      <h4><a href="javascript:void(0);" id="showImageItems" onclick="retrieveImages()">Click to choose image</a></h4>
+
+
+      <div id="showImages" style="display:none;"></div>
+
+
+      <div id="showInputUpload" style="display:none;">
+        <input type="file" id="imageFile" accept="image/*" onchange="uploadImage()">
+      </div>
+
+    </div> 
+
+    <div class="form-label-group">
+      <input type="hidden" id="image">
+    </div>
+
+    <div class="form-label-group"></div>
+      <button id="saveBtn" class="btn btn-lg btn-primary btn-block" type="button" onclick="save()">Save</button>
+    </div>
+
+
+    <div class="form-label-group mt-3">
+      <span id="message"></span>
+    </div>
+
+  </form>
+
+
+
+  <div class="album py-5 bg-light">
+    <div class="container">
+
+      <div class="row" id="dataTable"></div>
+
+    </div>
+  </div>
+
+</main>
+
+<footer class="text-muted">
+  <div class="container">
+    <p class="float-right">
+      <a href="#">Back to top</a>
+    </p>
+    
+  </div>
+</footer>
+
+<script src="../js/jquery.min.js"></script>
+<script src="../js/popper.min.js"></script>
+<script src="../js/bootstrap.min.js"></script>
+
+<script src="../js/main.js"></script>
+
+</html>
