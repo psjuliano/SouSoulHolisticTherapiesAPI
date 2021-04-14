@@ -1,4 +1,6 @@
+//Get full url from server
 var url = window.location.href;
+//Get host from server
 var host = url.split('/')[0]+url.split('/')[1]+'//'+url.split('/')[2]
 var AppUrl = host; 
 var pathAPI = '/api/v1/services';
@@ -12,13 +14,14 @@ $( document ).ready(function() {
 });
 
 
+//Get all registers From API
 async function retrieve(){
 
     await $.getJSON(APIUrl, function(data) {
 
         data = data.data
 
-        let dataTable = '';
+        let dataList = '';
 
         data = typeof data == 'string' ? JSON.parse(data) : data;
         data.forEach(function(element) {
@@ -35,7 +38,8 @@ async function retrieve(){
                 image = 'https://sindilojas-sp.org.br/wp-content/themes/sindilojas/assets/images/default.jpg';
             }
 
-            dataTable += `
+            //Generate HTML data
+            dataList += `
 
                 <div class="col-md-4" id="service_`+service_id+`">
                     <div class="card mb-4 shadow-sm">
@@ -59,14 +63,14 @@ async function retrieve(){
         
         })
 
-        dataTable = dataTable.replace("[object HTMLDivElement]", "");
-        $('#dataTable').html(dataTable);
+        dataList = dataList.replace("[object HTMLDivElement]", "");
+        $('#dataList').html(dataList);
     })
 
 }
 
 
-
+//Get one register by id from API
 async function retrieveOne(id){
 
     clearAll();
@@ -94,7 +98,7 @@ async function retrieveOne(id){
 }
 
 
-
+//Send register data to API or update register data
 async function save(id){
 
     $('#message').html('sending..');
@@ -149,7 +153,7 @@ async function save(id){
 
 
 
-
+//Delete one register from API
 async function deleteOne(title, id){
 
     if(confirm("Remove service "+title+ " ?")){
@@ -183,7 +187,7 @@ async function deleteOne(title, id){
 
 
 
-
+//Upload image to API
 async function uploadImage(){
 
     $('#message').html('uploading image..');
@@ -218,7 +222,7 @@ async function uploadImage(){
 
 
 
-
+//Get image from API
 async function retrieveImages(){
 
     let images = '';
@@ -253,6 +257,7 @@ async function retrieveImages(){
 }
 
 
+//Get one image from API
 async function defineImage(imagePath){
     $("#image").val('')
     $("#image").val(imagePath)
@@ -260,6 +265,7 @@ async function defineImage(imagePath){
 
 
 
+//Delete Image from API
 async function deleteImage(imageName){
 
 
@@ -292,7 +298,7 @@ async function deleteImage(imageName){
 
 
 
-
+//Clear fields and messages
 function clearAll(){
     
     $('#service_id').html('');
@@ -312,7 +318,7 @@ function clearAll(){
 }
 
 
-
+//Format to currency
 $("input[data-type='currency']").on({
     keyup: function() {
       formatCurrency($(this));
