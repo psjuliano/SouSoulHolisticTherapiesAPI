@@ -406,6 +406,7 @@ function formatCurrency(input, blur) {
 
 $(document).ready(function(){
 
+    //Show or hide Image Library
     $("#showImageItems").click(function() {
         $("#showImages").toggle();
         $("#showInputUpload").toggle();
