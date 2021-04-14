@@ -28,6 +28,7 @@ app.get('/', (req, res) => {
 // GET request
 app.get('/api/v1/services', async(req, res) => {
 
+    //Mongoose function to retrieve dta from database
     services = await model.Services.find().sort({service_id: -1})
     const data = {data: services.map(model.transformer)};
     res.status(200).send(data)

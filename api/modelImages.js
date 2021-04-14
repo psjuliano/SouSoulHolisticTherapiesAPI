@@ -1,12 +1,13 @@
 const functions = require('./util-functions'); //require util functions
-const {Storage} = require('@google-cloud/storage');
-const fs = require('fs');
+const {Storage} = require('@google-cloud/storage'); //To storage images in Google Cloud
+const fs = require('fs'); //To manipulate files
 require('dotenv').config();
 
 
 
 async function generateFirebaseKey(){
 
+    //Generate firebase key with data defined in .env file
     fs.access("firebase-key.json", (err) => {
         if (err) {
 
@@ -27,7 +28,7 @@ async function generateFirebaseKey(){
 
             const jsonData = JSON.stringify(objectData);
 
-
+            //Generate file if not exists
             fs.writeFile("firebase-key.json", jsonData, function (err) {
                 if (err) {
                     console.log("An error occured while writing JSON Object to File.");
@@ -52,6 +53,7 @@ async function uploadImage(file) {
 
     generateFirebaseKey()
 
+    //Define file of firebase key
     const storage = new Storage({
         keyFilename: './firebase-key.json'
     });
@@ -60,7 +62,7 @@ async function uploadImage(file) {
 
 
     try{
-        // Uploads a local file to the bucket
+        // Uploads a local file to the Google Cloud bucket
         await storage.bucket(bucketName).upload(file, {
             // Support for HTTP requests made with `Accept-Encoding: gzip`
             gzip: true,
@@ -106,17 +108,10 @@ async function listImages() {
 
     let arr = [];
 
+    //Insert data in array
     files.forEach(file => {
         arr.push("https://storage.cloud.google.com/" + bucketName + "/" + file.name);
     });
-
-
-    /*
-    let result = {}
-    for(let key in arr) {
-        result[key] = arr[key]; // in this case key will be 0,1,2 i.e index of array element
-    }
-    */
 
     return arr;
 
@@ -138,6 +133,7 @@ async function deleteImage(fileName) {
     const bucketName = process.env.BUCKET_NAME
 
     try{
+        //Delete file from Google Cloud (Firebase)
         await storage.bucket(bucketName).file(fileName).delete();
         return true
     }

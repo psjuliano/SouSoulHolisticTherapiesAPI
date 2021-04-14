@@ -31,7 +31,6 @@ async function retrieve(){
             let image =  element.attributes.image;
             let updated =  element.attributes.updated;
 
-
             if(image == ''){
                 image = 'https://sindilojas-sp.org.br/wp-content/themes/sindilojas/assets/images/default.jpg';
             }
