@@ -8,6 +8,7 @@ require('dotenv').config();
 async function generateFirebaseKey(){
 
     //Generate firebase key with data defined in .env file
+    //See https://cloud.google.com/iam/docs/creating-managing-service-account-keys 
     fs.access("firebase-key.json", (err) => {
         if (err) {
 

@@ -267,11 +267,14 @@ app.post('/api/v1/images', async(req, res) => {
         imageFile = req.files.image
         imageName = req.files.image.name;
         
+        //Temporarily saves image to server 
         imageFile.mv('./'+imageName);
 
+        //Send image to Google Cloud storage
         uploaded = await modelImages.uploadImage(imageName);
 
         if(uploaded){
+            //Delete image in server 
             fs.unlinkSync('./'+imageName);
             res.status(200).send()
         }
@@ -296,6 +299,7 @@ app.delete('/api/v1/images/:file_name', async(req, res) => {
         )
     }
 
+    //Delete image in Google Cloud storage
     let images = await modelImages.deleteImage(req.params.file_name);
     let data = images
 
