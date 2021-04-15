@@ -111,7 +111,7 @@ async function listImages() {
 
     //Insert data in array
     files.forEach(file => {
-        arr.push("https://storage.cloud.google.com/" + bucketName + "/" + file.name);
+        arr.push("https://storage.googleapis.com/" + bucketName + "/" + file.name);
     });
 
     return arr;
