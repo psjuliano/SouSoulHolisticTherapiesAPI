@@ -9,8 +9,10 @@ var APIUrl = AppUrl+pathAPI;
 var APIImagesUrl = AppUrl+pathImages
 
 
+//Execute retrieve() and retrieveImages() after load document
 $( document ).ready(function() {
     retrieve();
+    retrieveImages()
 });
 
 
@@ -21,12 +23,11 @@ async function retrieve(){
 
         data = data.data
 
-        let dataList = '';
+        let dataGrid = '';
 
+        //Foreach loop do generate HTML data grid
         data = typeof data == 'string' ? JSON.parse(data) : data;
         data.forEach(function(element) {
-
-            $('#service_'+element.attributes.service_id).remove();
 
             let service_id =  element.attributes.service_id;
             let title =  element.attributes.title;
@@ -34,12 +35,13 @@ async function retrieve(){
             let image =  element.attributes.image;
             let updated =  element.attributes.updated;
 
+            //Default image if image not selected
             if(image == ''){
                 image = 'https://sindilojas-sp.org.br/wp-content/themes/sindilojas/assets/images/default.jpg';
             }
 
-            //Generate HTML data
-            dataList += `
+            //Generate HTML data grid
+            dataGrid += `
 
                 <div class="col-md-4" id="service_`+service_id+`">
                     <div class="card mb-4 shadow-sm">
@@ -63,8 +65,8 @@ async function retrieve(){
         
         })
 
-        dataList = dataList.replace("[object HTMLDivElement]", "");
-        $('#dataList').html(dataList);
+        dataGrid = dataGrid.replace("[object HTMLDivElement]", "");
+        $('#dataList').html(dataGrid);
     })
 
 }
@@ -73,6 +75,7 @@ async function retrieve(){
 //Get one register by id from API
 async function retrieveOne(id){
 
+    //Clear all fields and messages
     clearAll();
 
     await $.getJSON(APIUrl+'/'+id, function(data) {
@@ -86,11 +89,13 @@ async function retrieveOne(id){
         let price =  element.attributes.price;
         let image =  element.attributes.image;
 
+        //Fill inputs with registered data
         $('#service_id').html('Service ID: '+service_id);
         $("#title").val(title);
         $("#price").val(price);
         $("#image").val(image);
 
+        //Generate update button
         $("#saveBtn").attr("onclick","save("+id+")");
 
     })
@@ -101,21 +106,25 @@ async function retrieveOne(id){
 //Send register data to API or update register data
 async function save(id){
 
+    //Send data massage
     $('#message').html('sending..');
 
     let method = '';
     let api_url = ''
 
+    //Catch input values
     let service = {
         title: $("#title").val(),
         price: $("#price").val(),
         image: $("#image").val()
     }
 
+    //Define method and API url if create new register
     if(id == undefined){
         method = 'post';
         api_url = APIUrl;
     }
+    //Define method and API url if update register
     else{
         method = 'put';
         api_url = APIUrl+'/'+id;
@@ -192,6 +201,7 @@ async function uploadImage(){
 
     $('#message').html('uploading image..');
 
+    //Send image to API in formData format
     let formData = new FormData();           
     formData.append('image', $('#imageFile').prop('files')[0]);  
 
@@ -237,6 +247,7 @@ async function retrieveImages(){
             parts = imagePath.split('/');
             imageName = parts[parts.length - 1];
 
+            //Generate images div contentor
             images += `
             <div class="boxImagesInLibrary">
                 <img class="imagesInLibrary" src="`+imagePath+`" onclick="defineImage('`+imagePath+`')">
@@ -277,10 +288,8 @@ async function deleteImage(imageName){
             dataType: 'json',
             contentType: 'application/json',
             data: '',
-            success: function (data) {
-                
+            success: function (data) {    
                 retrieveImages()
-
             },
             error: function(request, message, error) {
                 alert('Error to delete data');
@@ -406,7 +415,7 @@ function formatCurrency(input, blur) {
 
 $(document).ready(function(){
 
-    //Show or hide Image Library
+    //Show or hide Images Library
     $("#showImageItems").click(function() {
         $("#showImages").toggle();
         $("#showInputUpload").toggle();
