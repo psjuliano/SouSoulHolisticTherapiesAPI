@@ -43,10 +43,10 @@ async function retrieve(){
             //Generate HTML data grid
             dataGrid += `
 
-                <div class="col-md-4" id="service_`+service_id+`">
+                <div class="col-md-4" id="service_`+service_id+`" style="overflow:hidden;">
                     <div class="card mb-4 shadow-sm">
                         
-                        <img src="`+image+`?updated=`+updated+`">
+                        <img src="`+image+`?updated=`+updated+`" style="width:100%;height:auto;">
                             
                         <div class="card-body">
                             <h4 class="card-text">`+title+`</h4>
